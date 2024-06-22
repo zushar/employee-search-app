@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { AppProvider } from './context/AppContext';
+import EmployeeList from './components/EmployeeList';
+import EmployeeDetails from './components/EmployeeDetails';
+import Favorites from './components/Favorites';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AppProvider>
+      <Router>
+        <div className="container mx-auto p-4">
+          <nav className="flex justify-between items-center py-4">
+            <Link to="/" className="text-2xl font-bold">Employee Search</Link>
+            <Link to="/favorites" className="text-xl">Favorites</Link>
+          </nav>
+          <Routes>
+            <Route path="/" element={<EmployeeList />} />
+            <Route path="/employee/:id" element={<EmployeeDetails />} />
+            <Route path="/favorites" element={<Favorites />} />
+          </Routes>
+        </div>
+      </Router>
+    </AppProvider>
   );
-}
+};
 
 export default App;
