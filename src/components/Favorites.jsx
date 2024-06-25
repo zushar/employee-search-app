@@ -17,9 +17,9 @@ const Favorites = () => {
           <h2 className="text-xl mb-2">{employee.name.first} {employee.name.last}</h2>
           <p className="text-gray-600">{employee.dob.age} years old</p>
           <p className="text-gray-600">{employee.location.city}, {employee.location.country}</p>
-          <Link to={`/employee/${employee.login.uuid}`} className="text-blue-500 mt-2">View Details</Link>
+          <Link to={`/favoritesDatails/${employee.login.username}`} className="text-blue-500 mt-2">View Details</Link>
           <button
-            onClick={() => removeFavorite(employee.login.uuid)}
+            onClick={() => removeFavorite(employee.login.username)}
             className="mt-2 bg-red-500 text-white py-1 px-4 rounded"
           >
             Remove from Favorites

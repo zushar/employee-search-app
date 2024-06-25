@@ -1,23 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
-import EmployeeList from './components/EmployeeList';
+import Home from './components/Home';
 import EmployeeDetails from './components/EmployeeDetails';
 import Favorites from './components/Favorites';
+import Navbar from './components/Navbar';
+import FavoritesDatails from './components/FavoritesDatails';
 
 const App = () => {
   return (
     <AppProvider>
       <Router>
         <div className="container mx-auto p-4">
-          <nav className="flex justify-between items-center py-4">
-            <Link to="/" className="text-2xl font-bold">Employee Search</Link>
-            <Link to="/favorites" className="text-xl">Favorites</Link>
-          </nav>
+          <Navbar/>
           <Routes>
-            <Route path="/" element={<EmployeeList />} />
-            <Route path="/employee/:id" element={<EmployeeDetails />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/employee" element={<EmployeeDetails />} />
             <Route path="/favorites" element={<Favorites />} />
+            <Route path="/favoritesDatails/:id" element={<FavoritesDatails />} />
           </Routes>
         </div>
       </Router>

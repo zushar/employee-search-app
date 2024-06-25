@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { AppContext } from '../context/AppContext';
-import axios from 'axios';
 import L from 'leaflet';
 
 // Fixing marker issue with leaflet and react-leaflet
@@ -15,43 +14,20 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const EmployeeDetails = () => {
-  const [searchParams] = useSearchParams();
-  const company = searchParams.get('company');
-  const id = searchParams.get('id')
+const FavoritesDatails = () => {
+  const { id } = useParams();
   const { favorites, addFavorite, removeFavorite } = useContext(AppContext);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [employee, setEmployee] = useState(null);
 
-  const fetchEmployeeDetails = async (company, id) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await axios.get(`https://randomuser.me/api/?results=10&seed=${company}`);
-console.log(response.data.results);
-      const foundEmployee = await response.data.results.find(emp => emp.login.username === id);
-console.log(foundEmployee, id);
-      if (foundEmployee) {
-        setEmployee(foundEmployee);
-      } else {
-        setError('Employee not found');
-      }
-    } catch (err) {
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    
-      fetchEmployeeDetails(company, id);
-    
-  }, [company, id]);
+    const foundEmployee =  favorites.find(emp => emp.login.username === id);
+    if (foundEmployee) {
+      setEmployee(foundEmployee);
+    } else {
+      setEmployee(null);
+    }
+  }, [id, favorites]);
 
-  if (loading) return <div className='justify-center text-xl'>Loading...</div>;
-  if (error) return <div className='justify-center text-xl'>Error fetching data: {error}</div>;
   if (!employee) return <div className='justify-center text-xl'>Employee not found</div>;
 
   const isFavorite = favorites.some(emp => emp.login.username === employee.login.username);
@@ -95,4 +71,4 @@ console.log(foundEmployee, id);
   );
 };
 
-export default EmployeeDetails;
+export default FavoritesDatails;
