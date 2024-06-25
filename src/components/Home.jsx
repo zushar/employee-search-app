@@ -52,6 +52,7 @@ export default function Home() {
     } else {
       fetchEmployeesDefault();
     }
+// eslint-disable-next-line
   }, [query]);
 
   useEffect(() => {
@@ -60,6 +61,7 @@ export default function Home() {
       setDosNotAvQuery(true);
       fetchEmployeesDefault();
     }
+// eslint-disable-next-line
   }, [location.pathname, query]);
 
   const handleCompanyChange = () => {
